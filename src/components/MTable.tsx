@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles,createTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,8 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
-
-let yum = [];
  
 const useStyles = makeStyles({
     table: {
@@ -17,7 +15,10 @@ const useStyles = makeStyles({
     },
   });
 
-function MTable()  {
+function MTable(props: any)  {
+  const url = "http://localhost:5000/basic";
+  //const [url, setUrl] = useState(props.menuUrl);
+  //const menu = ['dessert', 'west', 'southEastAsia', 'japanese', 'maxican', 'chinese'];
   const classes = useStyles();
   const [rows, setRows] = useState(new Array<{
     id:number;
@@ -26,7 +27,7 @@ function MTable()  {
     location:string;
   }>());
   useEffect(()=>{
-      axios.get("http://localhost:5000/basic")
+      axios.get(props.menuUrl==null?url:props.menuUrl)
       .then(function (response) {
        setRows(response.data)
       })
